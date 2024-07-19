@@ -152,3 +152,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         ProjectService._update_project_tags(instance, tags)
         return instance
 
+    def create(self, validated_data):
+        portrait_file_id = validated_data.pop('portrait_file', None)
+        project = Project.objects.create(**validated_data)
+        if portrait_file_id:
+            project.portrait_file = File.objects.get(id=portrait_file_id)
+            project.save()
+        return project

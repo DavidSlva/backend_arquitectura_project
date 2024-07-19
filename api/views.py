@@ -270,7 +270,14 @@ class ProjectViewSet(viewsets.ViewSet):
 
     @handle_exceptions
     def list(self, request):
-        projects = ProjectService.getAllProjects()
+        query = request.query_params.get('query', '')
+        if query:
+            projects = Project.objects.filter(
+                Q(name__icontains=query) |
+                Q(project_tags__tag__name__icontains=query)
+            ).distinct()
+        else:
+            projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
