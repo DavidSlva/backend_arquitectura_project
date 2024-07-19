@@ -138,10 +138,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'owner', 'description', 'created_at', 'active',
             'project_files', 'project_members', 'project_tags', 'comments', 'portrait_file', 'references'
-<<<<<<< HEAD
-=======
-
->>>>>>> d95d445 (cambios jassi)
         ]
         read_only_fields = ['id', 'created_at', 'active']
 
@@ -156,8 +152,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         ProjectService._update_project_tags(instance, tags)
         return instance
 
-<<<<<<< HEAD
-=======
     def create(self, validated_data):
         portrait_file_id = validated_data.pop('portrait_file', None)
         project = Project.objects.create(**validated_data)
@@ -165,4 +159,3 @@ class ProjectSerializer(serializers.ModelSerializer):
             project.portrait_file = File.objects.get(id=portrait_file_id)
             project.save()
         return project
->>>>>>> d95d445 (cambios jassi)
