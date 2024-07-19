@@ -242,14 +242,11 @@ class ProjectFileViewSet(viewsets.ViewSet):
 
     @handle_exceptions
     def create(self, request):
-        print(request.data)
         serializer = ProjectFileSerializer(data=request.data)
         if serializer.is_valid():
-            print("serializer.validated_data", serializer.validated_data)
             data = serializer.validated_data
             data['file_id'] = request.data['file']
             projectfile = FileService.saveFileProject(data)
-            print(projectfile)
             # file = FileService.uploadFile(serializer.validated_data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
